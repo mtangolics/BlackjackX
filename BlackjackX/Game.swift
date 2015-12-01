@@ -31,10 +31,40 @@ class Game {
     
     func PlayerHit() -> Void {
         playerHand.AddCard(gameDeck.Draw())
+        if(playerHand.CurrentValue > 21) {
+            PlayerLose()
+        }
+    }
+    
+    func PlayerStand() -> Void {
+        DealerPlay()
+        CalcWinner()
+    }
+    
+    func DealerPlay() -> Void {
+        while(dealerHand.CurrentValue < 21 && dealerHand.CurrentValue < playerHand.CurrentValue) {
+            DealerHit()
+        }
+    }
+    
+    func CalcWinner() -> Void {
+        
     }
     
     func DealerHit() -> Void {
         dealerHand.AddCard(gameDeck.Draw())
+    }
+    
+    func PlayerLose() -> Void {
+        
+    }
+    
+    func PlayerWin() -> Void {
+        
+    }
+    
+    func PlayerPush() -> Void {
+        
     }
     
     func New() -> Void {
