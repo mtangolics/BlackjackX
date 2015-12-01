@@ -16,6 +16,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
+        let gameInstance = Game()
+        
+        gameInstance.Deal()
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
