@@ -17,7 +17,7 @@ struct Card: CustomStringConvertible {
     enum Rank:String {
         case Two = "2", Three = "3", Four = "4", Five = "5", Six = "6"
         case Seven = "7", Eight = "8", Nine = "9", Ten = "10"
-        case Jack = "J", Queen = "Q", King = "K", Ace = "A"
+        case Jack = "Jack", Queen = "Queen", King = "King", Ace = "Ace"
         
         static let allValues = [Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace]
     }
@@ -54,8 +54,6 @@ struct Card: CustomStringConvertible {
             val = 10
         case .Ace:
             val = 11
-        default:
-            val = 0
         }
         
         return val
