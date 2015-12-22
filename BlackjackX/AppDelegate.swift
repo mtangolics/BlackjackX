@@ -16,6 +16,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var masterViewController: MasterViewController!
 
 
+    @IBAction func newGame(sender: AnyObject) {
+        masterViewController.newGame()
+    }
+    
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
         masterViewController = MasterViewController(nibName: "MasterViewController", bundle: nil)

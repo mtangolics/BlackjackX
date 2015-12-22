@@ -16,10 +16,15 @@ class BlackjackXData: NSObject {
     
     var gameStatus:GameStatus = GameStatus.PLAYING
 
+    
     override init() {
         gameDeck = Deck()
         playerHand = Hand()
         dealerHand = Hand()
+    }
+    
+    func IsPlaying() -> Bool {
+        return gameStatus == GameStatus.PLAYING
     }
     
     func Deal() -> Void {
@@ -54,7 +59,14 @@ class BlackjackXData: NSObject {
     }
     
     func CalcWinner() -> Void {
-        if(dealerHand.CurrentValue > 21) {
+        
+        if(dealerHand.CurrentValue == 21 && playerHand.CurrentValue != 21) {
+            gameStatus = GameStatus.LOSE_DEALER_BLACKJACK
+        }
+        else if(playerHand.CurrentValue == 21 && playerHand.cards.count == 2 && dealerHand.CurrentValue != 21) {
+            gameStatus = GameStatus.WIN_PLAYER_BLACKJACK
+        }
+        else if(dealerHand.CurrentValue > 21) {
             gameStatus = GameStatus.WIN_DEALER_BUST
         }
         else if(dealerHand.CurrentValue > playerHand.CurrentValue) {
@@ -77,5 +89,6 @@ class BlackjackXData: NSObject {
         gameDeck = Deck()
         playerHand = Hand()
         dealerHand = Hand()
+        gameStatus = GameStatus.PLAYING
     }
 }

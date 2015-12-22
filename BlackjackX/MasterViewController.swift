@@ -14,6 +14,9 @@ class MasterViewController: NSViewController {
     var playerCardImages = [NSImageView]()
     var dealerCardImages = [NSImageView]()
     
+    var gameCount:UInt = 0
+    var winCount:UInt = 0
+    
     let CARD_WIDTH:CGFloat = 166
     let CARD_HEIGHT:CGFloat = 242
     let CARD_OFFSET:CGFloat = 30
@@ -21,20 +24,40 @@ class MasterViewController: NSViewController {
     @IBOutlet weak var gameStatusLabel: NSTextField!
     
     @IBOutlet weak var playerScoreLabel: NSTextField!
-    
+        
     @IBOutlet weak var dealerScoreLabel: NSTextField!
     
+    @IBOutlet weak var numGamesLabel: NSTextField!
+    
+    @IBOutlet weak var winrateLabel: NSTextField!
+    
+    @IBOutlet weak var hitButton: NSButton!
+    
+    @IBOutlet weak var standButton: NSButton!
+    
+    @IBOutlet weak var newButton: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        newGame()
+    }
+    
+    func newGame() {
+        playerCardImages.forEach { $0.removeFromSuperview() }
+        dealerCardImages.forEach { $0.removeFromSuperview() }
+        playerCardImages = [NSImageView]()
+        dealerCardImages = [NSImageView]()
+        
+        model.New()
         setupBoard()
         model.Deal()
+        updateGameStatus()
         updateCards()
         updateScores()
     }
     
     func setupBoard() -> Void {
+        
         let topPosition = view.frame.height - CARD_HEIGHT - 50
         let playerAnchorImage:NSImageView = NSImageView(frame: NSRect(x:50,y:topPosition,width:CARD_WIDTH,height:CARD_HEIGHT))
         
@@ -51,10 +74,10 @@ class MasterViewController: NSViewController {
         view.addSubview(dealerAnchorImage)
     }
     
-    func updateCards() -> Void {
+    func updateCards(reveal:Bool = false) -> Void {
 
         // Handle player cards
-        for(var i = 0; i < model.playerHand.cards.count; i++) {
+        for i in 0...model.playerHand.cards.count-1 {
             let card = model.playerHand.cards[i]
             let cardImage = NSImage(named: getCardImage(card))
             
@@ -71,9 +94,16 @@ class MasterViewController: NSViewController {
             }
         }
         // Handle dealer cards
-        for(var i = 0; i < model.dealerHand.cards.count; i++) {
+        for i in 0...model.dealerHand.cards.count-1 {
             let card = model.dealerHand.cards[i]
-            let cardImage = NSImage(named: getCardImage(card))
+            let cardImage:NSImage!
+            
+            if(i == 1 && model.dealerHand.cards.count == 2 && !reveal) {
+                cardImage = NSImage(named: "card_back")
+            }
+            else {
+                cardImage = NSImage(named: getCardImage(card))
+            }
             
             if(i >= dealerCardImages.count) {
                 let xOffset:CGFloat = dealerCardImages.last!.frame.origin.x + CARD_OFFSET
@@ -95,24 +125,42 @@ class MasterViewController: NSViewController {
     
     func updateGameStatus() -> Void {
         gameStatusLabel.stringValue = model.gameStatus.rawValue
+        hitButton.enabled = model.IsPlaying()
+        standButton.enabled = model.IsPlaying()
+        newButton.enabled = !model.IsPlaying()
     }
     
     func updateScores() -> Void {
-        playerScoreLabel.stringValue = "Player: \(String(model.playerHand.CurrentValue))"
-        dealerScoreLabel.stringValue = "Dealer: \(model.dealerHand.CurrentValue)"
+        playerScoreLabel.stringValue = "Player: \(model.playerHand.CurrentValue)"
+        if(model.IsPlaying()) {
+            dealerScoreLabel.stringValue = "Dealer: "
+
+        }
+        else {
+            dealerScoreLabel.stringValue = "Dealer: \(model.dealerHand.CurrentValue)"
+            numGamesLabel.stringValue = "Games: \(++gameCount)"
+            if(model.gameStatus == GameStatus.WIN_DEALER_BUST || model.gameStatus == GameStatus.WIN_PLAYER_BLACKJACK) {
+                winCount++
+            }
+            winrateLabel.stringValue = "Winrate: \(Int(round(Double(winCount)/Double(gameCount)*100)))%"
+        }
     }
 
-    @IBAction func hitButton(sender: AnyObject) {
+    @IBAction func hitClicked(sender: AnyObject) {
         model.PlayerHit()
-        updateCards()
         updateScores()
         updateGameStatus()
+        updateCards(!model.IsPlaying())
     }
     
-    @IBAction func standButton(sender: AnyObject) {
+    @IBAction func standClicked(sender: AnyObject) {
         model.PlayerStand()
-        updateCards()
         updateScores()
         updateGameStatus()
+        updateCards(true)
+    }
+    
+    @IBAction func newClicked(sender: AnyObject) {
+        newGame()
     }
 }

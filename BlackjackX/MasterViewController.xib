@@ -9,8 +9,13 @@
             <connections>
                 <outlet property="dealerScoreLabel" destination="MVl-ey-Q1E" id="oQv-wi-de7"/>
                 <outlet property="gameStatusLabel" destination="bho-NF-mwZ" id="2To-et-h7R"/>
+                <outlet property="hitButton" destination="kCc-Ha-roR" id="8Pc-94-nks"/>
+                <outlet property="newButton" destination="l3G-d8-j2a" id="YIe-P4-hZ3"/>
+                <outlet property="numGamesLabel" destination="jyf-Q8-2w8" id="coz-MY-ekO"/>
                 <outlet property="playerScoreLabel" destination="W9Q-0K-fdl" id="ae5-oD-AKE"/>
+                <outlet property="standButton" destination="ncg-TK-aye" id="QBh-ab-ueZ"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+                <outlet property="winrateLabel" destination="wti-nA-1lx" id="yUv-kE-R31"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -20,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W9Q-0K-fdl">
-                    <rect key="frame" x="50" y="569" width="65" height="24"/>
+                    <rect key="frame" x="50" y="569" width="106" height="24"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Player" id="qvE-so-13x">
                         <font key="font" metaFont="system" size="20"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -28,7 +33,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MVl-ey-Q1E">
-                    <rect key="frame" x="450" y="569" width="70" height="24"/>
+                    <rect key="frame" x="450" y="569" width="109" height="24"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Dealer" id="hwq-aU-Omw">
                         <font key="font" metaFont="system" size="20"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -43,24 +48,50 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jyf-Q8-2w8">
+                    <rect key="frame" x="18" y="17" width="131" height="24"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Games: 0" id="tRK-4g-Lsm">
+                        <font key="font" metaFont="system" size="20"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wti-nA-1lx">
+                    <rect key="frame" x="651" y="18" width="131" height="24"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Winrate: 0%" id="WGO-k8-tJb">
+                        <font key="font" metaFont="system" size="20"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kCc-Ha-roR">
-                    <rect key="frame" x="300" y="13" width="100" height="32"/>
+                    <rect key="frame" x="238" y="14" width="100" height="32"/>
                     <buttonCell key="cell" type="push" title="Hit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OdQ-1M-TGF">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system" size="18"/>
                     </buttonCell>
                     <connections>
-                        <action selector="hitButton:" target="-2" id="UbW-4y-L8N"/>
+                        <action selector="hitClicked:" target="-2" id="MyQ-3b-B5g"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l3G-d8-j2a">
+                    <rect key="frame" x="434" y="14" width="129" height="32"/>
+                    <buttonCell key="cell" type="push" title="New Game" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="s3z-6h-YBx">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="18"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="newClicked:" target="-2" id="lcR-LH-GJq"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ncg-TK-aye">
-                    <rect key="frame" x="400" y="13" width="100" height="32"/>
+                    <rect key="frame" x="338" y="14" width="100" height="32"/>
                     <buttonCell key="cell" type="push" title="Stand" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="USy-rd-r1n">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system" size="18"/>
                     </buttonCell>
                     <connections>
-                        <action selector="standButton:" target="-2" id="aSe-aF-606"/>
+                        <action selector="standClicked:" target="-2" id="Lem-ix-d40"/>
                     </connections>
                 </button>
             </subviews>

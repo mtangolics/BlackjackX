@@ -23,9 +23,22 @@ class Hand {
     var CurrentValue:UInt {
         
         var sum:UInt = 0
+        var aCount:UInt = 0
         
         for c in cards {
+            if(c.rank == Card.Rank.Ace) {
+                aCount++
+            }
             sum += c.Value
+        }
+        
+        // Handle Ace's dual value
+        if(sum > 21 && aCount > 0) {
+            var sCount:UInt = 0
+            while(sum > 21 && sCount < aCount) {
+                sum -= 10
+                sCount++
+            }
         }
         
         return sum

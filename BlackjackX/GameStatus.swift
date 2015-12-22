@@ -11,6 +11,7 @@ import Foundation
 enum GameStatus:String {
     case PLAYING = ""
     case WIN_DEALER_BUST = "Dealer busts. You win!"
+    case WIN_PLAYER_BLACKJACK = "You have blackjack. You win!"
     case LOSE_DEALER_BLACKJACK = "Dealer has blackjack. You lose!"
     case LOSE_PLAYER_BUST = "You bust. You lose!"
     case LOSE_DEALER_HIGH = "Dealer is higher. You lose!"
