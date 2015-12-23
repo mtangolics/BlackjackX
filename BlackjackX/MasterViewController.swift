@@ -16,6 +16,7 @@ class MasterViewController: NSViewController {
     
     var gameCount:UInt = 0
     var winCount:UInt = 0
+    var pushCount:UInt = 0
     
     let CARD_WIDTH:CGFloat = 166
     let CARD_HEIGHT:CGFloat = 242
@@ -52,7 +53,7 @@ class MasterViewController: NSViewController {
         setupBoard()
         model.Deal()
         updateGameStatus()
-        updateCards()
+        updateCards(!model.IsPlaying())
         updateScores()
     }
     
@@ -142,7 +143,13 @@ class MasterViewController: NSViewController {
             if(model.gameStatus == GameStatus.WIN_DEALER_BUST || model.gameStatus == GameStatus.WIN_PLAYER_BLACKJACK) {
                 winCount++
             }
-            winrateLabel.stringValue = "Winrate: \(Int(round(Double(winCount)/Double(gameCount)*100)))%"
+            else if(model.gameStatus == GameStatus.PUSH) {
+                pushCount++
+            }
+            let tielessGames = gameCount - pushCount
+            if(tielessGames > 0) {
+                winrateLabel.stringValue = "Winrate: \(Int(round(Double(winCount)/Double(tielessGames)*100)))%"
+            }
         }
     }
 

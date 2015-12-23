@@ -34,14 +34,19 @@ class BlackjackXData: NSObject {
         dealerHand.AddCard(gameDeck.Draw())
         dealerHand.AddCard(gameDeck.Draw())
         
-        DebugHands()
+        if(dealerHand.CurrentValue == 21) {
+            if(playerHand.CurrentValue == 21) {
+                gameStatus = GameStatus.PUSH
+            }
+            else {
+                gameStatus = GameStatus.LOSE_DEALER_BLACKJACK
+            }
+        }
     }
     
     func PlayerHit() -> Void {
         playerHand.AddCard(gameDeck.Draw())
-        
-        debugPrint("Player hit added: \(playerHand.cards.last)")
-        DebugHands()
+
         if(playerHand.CurrentValue > 21) {
             gameStatus = GameStatus.LOSE_PLAYER_BUST
         }
@@ -60,10 +65,10 @@ class BlackjackXData: NSObject {
     
     func CalcWinner() -> Void {
         
-        if(dealerHand.CurrentValue == 21 && playerHand.CurrentValue != 21) {
+        if((dealerHand.CurrentValue == 21 && dealerHand.cards.count == 2) && playerHand.CurrentValue != 21) {
             gameStatus = GameStatus.LOSE_DEALER_BLACKJACK
         }
-        else if(playerHand.CurrentValue == 21 && playerHand.cards.count == 2 && dealerHand.CurrentValue != 21) {
+        else if((playerHand.CurrentValue == 21 && playerHand.cards.count == 2) && dealerHand.CurrentValue != 21) {
             gameStatus = GameStatus.WIN_PLAYER_BLACKJACK
         }
         else if(dealerHand.CurrentValue > 21) {
